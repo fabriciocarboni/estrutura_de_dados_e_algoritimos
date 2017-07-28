@@ -1,5 +1,7 @@
 package com.carboni.estruturadados.vetor;
 
+import java.util.Arrays;
+
 public class Vetor {
 
 	private String[] elementos;
@@ -43,6 +45,47 @@ public class Vetor {
 		return false;
 	}	
 	
+	public String busca(int posicao) {
+		if (!(posicao >= 0 && posicao < tamanho)) {
+			throw new IllegalArgumentException("Posicao invalida");
+		}
+		return this.elementos[posicao];
+	}
+	
+	public int busca(String elemento) {
+		//busca sequencial é o mais simples
+		for (int i=0; i<this.tamanho; i++) {
+			if (this.elementos[i].equals(elemento)){
+				return i;
+			}
+		}
+		return -1; //retorna -1 quando a posicao nao existe
+		
+	}
+	
+	
+	public int tamanho() {
+		return this.tamanho;
+	}
+
+	@Override
+	public String toString() {
+		
+		
+		StringBuilder s = new StringBuilder();
+		s.append("[");
+
+		for (int i=0; i<this.tamanho-1; i++){
+			s.append(this.elementos[i]);
+			s.append(", ");
+		}
+		if (this.tamanho > 0) {
+			s.append(this.elementos[this.tamanho-1]);
+		}
+		s.append("]");
+		
+		return s.toString();
+	}
 	
 }
 
