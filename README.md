@@ -1,1 +1,1 @@
-# estrutura_de_dados_e_algoritimos
+# Algorithm & Data Structure course
