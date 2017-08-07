@@ -1,60 +1,43 @@
 package com.carboni.estruturadados.vetor;
 
-import java.util.Arrays;
+import java.lang.reflect.Array;
 
-public class Vetor {
+public class Lista<T> {
 
-	private String[] elementos;
+	private T[] elementos;
 	private int tamanho;
-	
-	public Vetor(int capacidade){
-		this.elementos = new String[capacidade];
+
+	public Lista(int capacidade){
+		this.elementos = (T[]) new Object[capacidade];
 		this.tamanho = 0;
 	}
-	
-	/*public void adiciona(String elemento) {
-		for (int i=0; i<this.elementos.length; i++) {
-			if (this.elementos[i] == null) {
-				this.elementos[i] = elemento;
-				break;
-			}
-		}
-	}*/
-	
-	
-/*	public void adiciona(String elemento) throws Exception {
-		
-		if (this.tamanho < this.elementos.length) {
-			this.elementos[this.tamanho] = elemento;
-			this.tamanho++;
-		} else {
-			throw new Exception("Vetor já está cheio, não é possivel adicionar mais elementos");
-		}
-	}	
-	*/
-	
-	
-	public boolean adiciona(String elemento) {
+
+	public Lista(int capacidade, Class<T> tipoClasse){
+		this.elementos = (T[]) Array.newInstance(tipoClasse, capacidade);
+		this.tamanho = 0;
+	}
+
+	public boolean adiciona(T elemento) {
 		this.aumentaCapacidade();
 		if (this.tamanho < this.elementos.length) {
 			this.elementos[this.tamanho] = elemento;
 			this.tamanho++;
 			return true;
 		}
-		
+
 		return false;
 	}	
-	
-	
+
+
 	//adiciona um elemento em qq posicao do vetor
-	public boolean adiciona(int posicao, String elemento){
-		
+	public boolean adiciona(int posicao, T elemento){
+
 		if (!(posicao >= 0 && posicao < tamanho)) {
 			throw new IllegalArgumentException("Posicao invalida");
 		}
-		
+
 		this.aumentaCapacidade();
-		
+
 		//mover todos os elementos para proxima casa e deixar a posicao 0 livre
 		for (int i=this.tamanho; i>=posicao; i--) {
 			this.elementos[i+1] = this.elementos[i];
@@ -63,26 +46,26 @@ public class Vetor {
 		this.tamanho++;// adicionar 1 ao tamanho
 		return true;
 	}
-	
+
 	private void aumentaCapacidade(){
 		if (this.tamanho == this.elementos.length){
-			String[] elementosNovos = new String[this.elementos.length * 2];
+			T[] elementosNovos = (T[]) new Object[this.elementos.length * 2];
 			for (int i=0; i<this.elementos.length; i++){
 				elementosNovos[i] = this.elementos[i];
 			}
 			this.elementos = elementosNovos;
 		}
 	}
-	
-	
-	public String busca(int posicao) {
+
+
+	public Object busca(int posicao) {
 		if (!(posicao >= 0 && posicao < tamanho)) {
 			throw new IllegalArgumentException("Posicao invalida");
 		}
 		return this.elementos[posicao];
 	}
-	
-	public int busca(String elemento) {
+
+	public int busca(T elemento) {
 		//busca sequencial é o mais simples
 		for (int i=0; i<this.tamanho; i++) {
 			if (this.elementos[i].equals(elemento)){
@@ -91,7 +74,7 @@ public class Vetor {
 		}
 		return -1; //retorna -1 quando a posicao nao existe
 	}
-	
+
 
 	public void remove(int posicao){
 		if (!(posicao >= 0 && posicao < tamanho)) {
@@ -102,16 +85,15 @@ public class Vetor {
 		}
 		this.tamanho--;
 	}
-	
-	
+
+
 	public int tamanho() {
 		return this.tamanho;
 	}
 
 	@Override
 	public String toString() {
-		
-		
+
 		StringBuilder s = new StringBuilder();
 		s.append("[");
 
@@ -123,10 +105,10 @@ public class Vetor {
 			s.append(this.elementos[this.tamanho-1]);
 		}
 		s.append("]");
-		
+
 		return s.toString();
 	}
-	
+
 }
 
 
